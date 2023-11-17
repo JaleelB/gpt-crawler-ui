@@ -12,11 +12,17 @@ export default function SiteHeader() {
       const offset = window.scrollY;
       if (offset > 10) {
         ref.current?.classList.add(
-          "border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60"
+          "border-b",
+          "bg-background/95",
+          "backdrop-blur",
+          "supports-[backdrop-filter]:bg-background/60"
         );
       } else {
         ref.current?.classList.remove(
-          "border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60"
+          "border-b",
+          "bg-background/95",
+          "backdrop-blur",
+          "supports-[backdrop-filter]:bg-background/60"
         );
       }
     };
