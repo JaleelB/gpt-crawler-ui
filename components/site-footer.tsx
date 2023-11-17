@@ -1,13 +1,32 @@
 import Link from "next/link";
+import { siteConfig } from "./config/site-config";
 
 export default function SiteFooter() {
   return (
-    <footer className="w-screen h-20 flex justify-center items-center px-4 md:px-6 self-end text-muted-foreground">
-      Another web ui crafted by{" "}
-      <div className="w-[30px] h-[30px] bg-zinc-50 rounded-full mx-2" />
-      <Link href="#" className="hover:underline font-normal">
-        Jaleel
-      </Link>
+    <footer className="container flex flex-col items-center justify-between gap-4 py-10 md:h-24 md:flex-row md:py-0">
+      <div className="flex flex-col items-center gap-4 px-8 md:flex-row md:gap-2 md:px-0">
+        <p className="text-center text-sm leading-loose md:text-left text-muted-foreground">
+          Built by{" "}
+          <Link
+            href={siteConfig.links.twitter}
+            target="_blank"
+            rel="noreferrer"
+            className="font-medium underline underline-offset-4"
+          >
+            {siteConfig.creator.name}
+          </Link>
+          . The source code is available on{" "}
+          <Link
+            href={siteConfig.links.github}
+            target="_blank"
+            rel="noreferrer"
+            className="font-medium underline underline-offset-4"
+          >
+            GitHub
+          </Link>
+          .
+        </p>
+      </div>
     </footer>
   );
 }
