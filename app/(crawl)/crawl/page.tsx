@@ -1,6 +1,7 @@
 "use client";
 import CopyButton from "@/components/copy-button";
 import CrawlerForm from "@/components/crawler-form";
+import { Icons } from "@/components/icons";
 import { useState } from "react";
 
 export default function CrawlerHome() {
@@ -30,7 +31,12 @@ export default function CrawlerHome() {
         </div>
         <div className="mt-16 lg:mt-0 w-full lg:w-3/5 rounded-xl border bg-card text-card-foreground shadow p-4">
           {loadingState === "loading" || loadingState === "error" ? (
-            <div className="animate-pulse bg-zinc-900/20 rounded-md w-full h-full" />
+            <div className="w-full h-full flex items-center justify-center">
+              <Icons.spinner
+                className="w-6 h-6 mr-2 animate-spin"
+                stroke="white"
+              />
+            </div>
           ) : (
             <pre className="min-h-[450px] max-h-[750px] overflow-y-auto relative w-full h-full">
               {data !== null && (

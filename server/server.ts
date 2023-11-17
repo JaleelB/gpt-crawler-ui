@@ -54,6 +54,8 @@ export async function crawlAction(input: Config) {
     const results: CrawlResult[] = [];
 
     const crawler = new PlaywrightCrawler({
+      keepAlive: true,
+      requestHandlerTimeoutSecs: 180,
       async requestHandler({ request, page, enqueueLinks, log, pushData }) {
         if (cookie && cookie.name && cookie.value) {
           const cookieConfig = {
@@ -77,6 +79,7 @@ export async function crawlAction(input: Config) {
     });
 
     await crawler.run([url]);
+    await crawler.teardown();
 
     return { success: true, data: results };
   } catch (error) {
@@ -107,6 +110,7 @@ app.use(express.json());
 app.post("/crawl", async (req: Request, res: Response) => {
   try {
     const input = req.body as Config;
+    console.log("input", input);
     const result = await crawlAction(input);
     console.log("result", result);
     res.status(200).json({

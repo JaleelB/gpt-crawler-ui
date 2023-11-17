@@ -30,7 +30,7 @@ export default function CopyButton({ value }: { value: string }) {
       aria-label="Copy code"
       variant="ghost"
       className={cn(
-        `border absolute right-3 top-0 p-0 flex h-8 w-8 items-center justify-center rounded-md bg-background/20 hover:bg-background/20`
+        `border absolute right-3 top-0 p-0 z-10 flex h-8 w-8 items-center justify-center rounded-md bg-background/20 hover:bg-background/20`
       )}
     >
       <MotionConfig transition={{ duration: 0.15 }}>
