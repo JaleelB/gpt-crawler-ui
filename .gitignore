@@ -40,4 +40,5 @@ next-env.d.ts
 dist
 node_modules
 apify_storage
+storage
 crawlee_storage
