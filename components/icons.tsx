@@ -1,7 +1,9 @@
-import { BrainCog, LucideProps } from "lucide-react";
+import { BrainCog, Check, Copy, LucideProps } from "lucide-react";
 
 export const Icons = {
   logo: BrainCog,
+  copy: Copy,
+  check: Check,
   spinner: ({ ...props }: LucideProps) => (
     <svg
       {...props}

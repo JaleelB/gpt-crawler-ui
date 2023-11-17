@@ -72,11 +72,6 @@ export default function CrawlerForm({
   });
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
-    // const response = await fetch("/api/crawl", {
-    //   method: "POST",
-    //   body: JSON.stringify(formData),
-    // }).then((res) => res.json());
-
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_NODE_SERVER_URL}/crawl`,
       {
@@ -87,8 +82,6 @@ export default function CrawlerForm({
         },
       }
     ).then((res) => res.json());
-
-    // const result = await crawlAction(formData);
 
     if (response.success) {
       toast({

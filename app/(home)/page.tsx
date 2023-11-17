@@ -1,5 +1,5 @@
 "use client";
-import { siteConfig } from "@/components/config/site-config";
+import { siteConfig } from "@/config/site-config";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import Link from "next/link";

@@ -1,4 +1,5 @@
 "use client";
+import CopyButton from "@/components/copy-button";
 import CrawlerForm from "@/components/crawler-form";
 import { useState } from "react";
 
@@ -20,8 +21,18 @@ export default function CrawlerHome() {
         <div className="w-full lg:w-2/5 rounded-sm">
           <CrawlerForm resultsHandler={setData} />
         </div>
-        <div className="min-h-[450px] mt-16 lg:mt-0 w-full lg:w-3/5 rounded-xl border bg-card text-card-foreground shadow">
-          {data}
+        <div className="mt-16 lg:mt-0 w-full lg:w-3/5 rounded-xl border bg-card text-card-foreground shadow p-4">
+          <pre className="min-h-[450px] overflow-y-auto relative w-full h-full">
+            {data !== null && (
+              <CopyButton
+                value={JSON.stringify(data, null, 2)}
+                copyable={true}
+              />
+            )}
+            <code className="whitespace-pre-wrap">
+              {data !== null && JSON.stringify(data, null, 2)}
+            </code>
+          </pre>
         </div>
       </section>
     </main>
