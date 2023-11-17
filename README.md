@@ -1,36 +1,55 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# GPT-Crawler-UI
+
+## Overview
+
+GPT-Crawler-UI is a web-based interface for the GPT-Crawler, originally developed by BuilderIO. This project extends the functionality of the original GPT-Crawler by providing a user-friendly web interface, allowing users to easily interact with the crawler without delving into command-line operations.
+
+The original GPT-Crawler can be found here: [BuilderIO/gpt-crawler](https://github.com/BuilderIO/gpt-crawler).
+
+## Structure
+
+The GPT-Crawler-UI consists of two main components:
+
+1. **Frontend:** A React-based user interface that allows users to input their crawling parameters and view the results in a structured format.
+
+2. **Backend:** An Express server that handles requests from the frontend, executes the crawling process, and returns the results. The server is designed to restart after each request to ensure a fresh state for every operation.
+
+### Backend
+
+- Built with Express and integrates the PlaywrightCrawler from Crawlee.
+- Handles the crawling logic and data processing.
+- The server is designed to restart after each request, ensuring that each crawl starts with a clean state.
+
+## Caveats
+
+Due to the nature of the crawling process and the need to maintain a clean state, the server is set up to restart after each request. This design choice may affect performance and should be considered when deploying the application in a production environment.
 
 ## Getting Started
 
-First, run the development server:
+To get started with GPT-Crawler-UI:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+1. Clone the repository:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+   ```bash
+   git clone https://github.com/JaleelB/gpt-crawler-ui.git
+   ```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+2. Install dependencies:
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+   ```bash
+   cd gpt-crawler-ui
+   pnpm i
+   ```
 
-## Learn More
+3. Start the server and frontend:
+   ```bash
+   pnpm dev
+   ```
 
-To learn more about Next.js, take a look at the following resources:
+## Contributing
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+If you have a suggestion that would make this better, send a PR!
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Acknowledgements
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- Special thanks to BuilderIO for the original [GPT-Crawler](https://github.com/BuilderIO/gpt-crawler) which inspired this project.
