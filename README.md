@@ -1,5 +1,7 @@
 # GPT-Crawler-UI
 
+<img width="1512" alt="Screenshot 2023-11-17 at 5 12 28 PM" src="https://github.com/JaleelB/gpt-crawler-ui/assets/78449846/4f1b9387-5322-444b-aebc-8bf1dc73cedc">
+
 ## Overview
 
 GPT-Crawler-UI is a web-based interface for the GPT-Crawler, originally developed by BuilderIO. This project extends the functionality of the original GPT-Crawler by providing a user-friendly web interface, allowing users to easily interact with the crawler without delving into command-line operations.
