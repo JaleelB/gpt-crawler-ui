@@ -13,7 +13,6 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "./ui/use-toast";
-import { useFormStatus } from "react-dom";
 import { Icons } from "./icons";
 import { Dispatch, SetStateAction, useRef } from "react";
 
@@ -55,10 +54,15 @@ const FormSchema = z.object({
 
 export default function CrawlerForm({
   resultsHandler,
+  loadingState,
+  setLoadingState,
 }: {
   resultsHandler: Dispatch<SetStateAction<any>>;
+  loadingState: "idle" | "loading" | "error" | "success";
+  setLoadingState: Dispatch<
+    SetStateAction<"idle" | "loading" | "error" | "success">
+  >;
 }) {
-  const { pending } = useFormStatus();
   const ref = useRef<HTMLFormElement>(null);
 
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -72,6 +76,7 @@ export default function CrawlerForm({
   });
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
+    setLoadingState("loading");
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_NODE_SERVER_URL}/crawl`,
       {
@@ -84,11 +89,13 @@ export default function CrawlerForm({
     ).then((res) => res.json());
 
     if (response.success) {
+      setLoadingState("success");
       toast({
         title: "Crawler Config Submitted",
         description: "Your crawler config was submitted successfully.",
       });
     } else {
+      setLoadingState("error");
       toast({
         title: response.error,
         variant: "destructive",
@@ -214,10 +221,12 @@ export default function CrawlerForm({
         <Button
           type="submit"
           className="w-full rounded-md"
-          aria-disabled={pending}
-          disabled={pending}
+          aria-disabled={loadingState === "loading"}
+          disabled={loadingState === "loading"}
         >
-          {pending && <Icons.spinner className="w-4 h-4 mr-2 animate-spin" />}
+          {loadingState === "loading" && (
+            <Icons.spinner className="w-4 h-4 mr-2 animate-spin" />
+          )}
           Submit
         </Button>
       </form>

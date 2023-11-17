@@ -37,7 +37,7 @@ export default function SiteHeader() {
   return (
     <header
       ref={ref}
-      className="sticky top-0 w-screen h-20 flex justify-between items-center px-4 md:px-6"
+      className="sticky top-0 w-screen h-20 flex justify-between items-center px-4 md:px-6 z-50"
     >
       <Link
         href="/"

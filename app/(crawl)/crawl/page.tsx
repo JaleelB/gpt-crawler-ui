@@ -5,6 +5,9 @@ import { useState } from "react";
 
 export default function CrawlerHome() {
   const [data, setData] = useState(null);
+  const [loadingState, setLoadingState] = useState<
+    "idle" | "loading" | "error" | "success"
+  >("idle");
 
   return (
     <main className="px-4 container max-w-7xl flex flex-col flex-grow">
@@ -17,22 +20,27 @@ export default function CrawlerHome() {
           custom GPT models.
         </p>
       </section>
-      <section className="flex flex-col lg:flex-row justify-between gap-8 md:gap-16 px-4 md:px-8 pt-8 md:pt-12 pb-16 md:pb-24">
+      <section className="flex flex-col lg:flex-row justify-between gap-8 md:gap-16 px-4 md:px-8 pt-8 md:pt-12 pb-16 md:pb-24 relative">
         <div className="w-full lg:w-2/5 rounded-sm">
-          <CrawlerForm resultsHandler={setData} />
+          <CrawlerForm
+            resultsHandler={setData}
+            loadingState={loadingState}
+            setLoadingState={setLoadingState}
+          />
         </div>
         <div className="mt-16 lg:mt-0 w-full lg:w-3/5 rounded-xl border bg-card text-card-foreground shadow p-4">
-          <pre className="min-h-[450px] overflow-y-auto relative w-full h-full">
-            {data !== null && (
-              <CopyButton
-                value={JSON.stringify(data, null, 2)}
-                copyable={true}
-              />
-            )}
-            <code className="whitespace-pre-wrap">
-              {data !== null && JSON.stringify(data, null, 2)}
-            </code>
-          </pre>
+          {loadingState === "loading" || loadingState === "error" ? (
+            <div className="animate-pulse bg-zinc-900/20 rounded-md w-full h-full" />
+          ) : (
+            <pre className="min-h-[450px] max-h-[750px] overflow-y-auto relative w-full h-full">
+              {data !== null && (
+                <CopyButton value={JSON.stringify(data, null, 2)} />
+              )}
+              <code className="absolute whitespace-pre-wrap w-full h-full">
+                {data !== null && JSON.stringify(data, null, 2)}
+              </code>
+            </pre>
+          )}
         </div>
       </section>
     </main>

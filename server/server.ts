@@ -108,6 +108,7 @@ app.post("/crawl", async (req: Request, res: Response) => {
   try {
     const input = req.body as Config;
     const result = await crawlAction(input);
+    console.log("result", result);
     res.status(200).json({
       success: true,
       data: result,
