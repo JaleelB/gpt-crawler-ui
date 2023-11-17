@@ -25,10 +25,10 @@ const FormSchema = z.object({
     .transform((value) => parseInt(value, 10))
     .refine((value) => !isNaN(value) && value > 0, {
       message: "Must crawl at least one page.",
+    })
+    .refine((value) => value <= 10, {
+      message: "Cannot crawl more than 10 pages.",
     }),
-  // maxPagesToCrawl: z
-  //   .number()
-  //   .min(1, { message: "Must crawl at least one page." }),
   cookie: z
     .object({
       name: z.string().optional(),
@@ -225,7 +225,10 @@ export default function CrawlerForm({
           disabled={loadingState === "loading"}
         >
           {loadingState === "loading" && (
-            <Icons.spinner className="w-4 h-4 mr-2 animate-spin" />
+            <Icons.spinner
+              className="w-4 h-4 mr-2 animate-spin"
+              stroke="black"
+            />
           )}
           Submit
         </Button>
