@@ -1,4 +1,5 @@
 "use client";
+import { siteConfig } from "@/components/config/site-config";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
@@ -21,7 +22,9 @@ export default function Home() {
           }}
         >
           <Link
-            href="/crawl"
+            href={siteConfig.links.github}
+            target="_blank"
+            rel="noreferrer"
             className={buttonVariants({
               variant: "outline",
               className:
@@ -30,13 +33,15 @@ export default function Home() {
           >
             View Github
           </Link>
-          <Button
-            variant="default"
-            type="submit"
-            className={cn("px-6 py-6 w-fit")}
-          >
-            <Link href="/crawl">Start Crawling</Link>
-          </Button>
+          <Link href="/crawl">
+            <Button
+              variant="default"
+              type="submit"
+              className={cn("px-6 py-6 w-fit")}
+            >
+              Start Crawling
+            </Button>
+          </Link>
         </form>
       </section>
       <section className="w-full max-w-5xl mt-10">
