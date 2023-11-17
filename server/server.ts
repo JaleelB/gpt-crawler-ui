@@ -1,7 +1,8 @@
-"use server";
+import express, { Request, Response } from "express";
 import { PlaywrightCrawler } from "crawlee";
 import { Page } from "playwright";
 import { z } from "zod";
+import cors from "cors";
 
 /* 
     @see https://github.com/JaleelB/gpt-crawler/blob/main/config.ts 
@@ -90,3 +91,33 @@ export async function crawlAction(input: Config) {
     }
   }
 }
+
+// CORS configuration
+const corsOptions = {
+  origin: "http://localhost:3000", // Client's URL
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  credentials: true,
+  optionsSuccessStatus: 204,
+};
+
+const app = express();
+app.use(cors(corsOptions));
+app.use(express.json());
+
+app.post("/crawl", async (req: Request, res: Response) => {
+  try {
+    const input = req.body as Config;
+    const result = await crawlAction(input);
+    res.status(200).json({
+      success: true,
+      data: result,
+    });
+  } catch (error) {
+    res.status(500).json({ error: "Internal Server Error", details: error });
+  }
+});
+
+const PORT = process.env.NODE_SERVER_PORT || 3001;
+app.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}`);
+});

@@ -10,11 +10,10 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
-import { ZodIssue, z } from "zod";
+import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "./ui/use-toast";
-import { CrawlResult, crawlAction } from "@/app/crawl";
-import { useFormState, useFormStatus } from "react-dom";
+import { useFormStatus } from "react-dom";
 import { Icons } from "./icons";
 import { Dispatch, SetStateAction, useRef } from "react";
 
@@ -23,8 +22,14 @@ const FormSchema = z.object({
   match: z.string().min(1, { message: "Match pattern is required." }),
   selector: z.string().min(1, { message: "Selector is required." }),
   maxPagesToCrawl: z
-    .number()
-    .min(1, { message: "Must crawl at least one page." }),
+    .string()
+    .transform((value) => parseInt(value, 10))
+    .refine((value) => !isNaN(value) && value > 0, {
+      message: "Must crawl at least one page.",
+    }),
+  // maxPagesToCrawl: z
+  //   .number()
+  //   .min(1, { message: "Must crawl at least one page." }),
   cookie: z
     .object({
       name: z.string().optional(),
@@ -67,22 +72,38 @@ export default function CrawlerForm({
   });
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
-    const result = await crawlAction(data);
+    // const response = await fetch("/api/crawl", {
+    //   method: "POST",
+    //   body: JSON.stringify(formData),
+    // }).then((res) => res.json());
 
-    if (result.success) {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_NODE_SERVER_URL}/crawl`,
+      {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    ).then((res) => res.json());
+
+    // const result = await crawlAction(formData);
+
+    if (response.success) {
       toast({
         title: "Crawler Config Submitted",
         description: "Your crawler config was submitted successfully.",
       });
     } else {
       toast({
-        title: result.error,
+        title: response.error,
         variant: "destructive",
         description: "Your crawler config failed to submit.",
       });
     }
 
-    resultsHandler(result.data);
+    resultsHandler(response.data.data);
     ref.current?.reset();
   }
 
@@ -160,7 +181,7 @@ export default function CrawlerForm({
                 <span className="text-red-500">&#42;</span>
               </FormLabel>
               <FormControl>
-                <Input type="number" max={10} min={0} {...field} />
+                <Input type="number" max={10} min={1} {...field} />
               </FormControl>
               <FormDescription>
                 Limit the number of pages the crawler will visit.
